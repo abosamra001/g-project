@@ -10,7 +10,7 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        drawer: navbar(),
+        drawer: const NavBar(),
         appBar: AppBar(
           backgroundColor: Colors.teal.shade100,
           centerTitle: true,
@@ -21,7 +21,7 @@ class Home extends StatelessWidget {
         ),
         body: Stack(children: [
           Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
                 image: DecorationImage(
               image: AssetImage(
                 'images/home.jpeg',
@@ -33,17 +33,15 @@ class Home extends StatelessWidget {
               padding: const EdgeInsets.all(30),
               child: Center(
                 child: Column(children: [
-                  Container(
-                    child: Text(
-                      'لَن تَنَالُوا۟ ٱلْبِرَّ حَتَّىٰ تُنفِقُوا۟ مِمَّا تُحِبُّونَ وَمَا تُنفِقُوا۟ مِن شَىْءٍ فَإِنَّ ٱللَّهَ بِهِۦ عَلِيمٌ (آل عمران) ',
-                      style: GoogleFonts.amiri(
-                        fontSize: 25,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                      ),
+                  Text(
+                    'لَن تَنَالُوا۟ ٱلْبِرَّ حَتَّىٰ تُنفِقُوا۟ مِمَّا تُحِبُّونَ وَمَا تُنفِقُوا۟ مِن شَىْءٍ فَإِنَّ ٱللَّهَ بِهِۦ عَلِيمٌ (آل عمران) ',
+                    style: GoogleFonts.amiri(
+                      fontSize: 25,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 40,
                   ),
                   ElevatedButton(
@@ -51,38 +49,40 @@ class Home extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => Motabra(),
+                            builder: (context) => const Motabra(),
                           ),
                         );
                       },
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.cyan.shade50,
+                          padding: const EdgeInsets.all(16.0),
+                          shadowColor: Colors.black,
+                          minimumSize: const Size(140, 70)),
                       child: Text(
                         "المٌنتفع",
                         style: GoogleFonts.amiri(
                           fontSize: 30,
                           color: Colors.black,
                         ),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.cyan.shade50,
-                          padding: const EdgeInsets.all(16.0),
-                          shadowColor: Colors.black,
-                          minimumSize: Size(140, 70))),
-                  SizedBox(
+                      )),
+                  const SizedBox(
                     height: 20,
                   ),
                   ElevatedButton(
                       onPressed: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => montnav()));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const MontNav()));
                       },
-                      child: Text("المُتبرع",
-                          style: GoogleFonts.amiri(
-                              fontSize: 30, color: Colors.black)),
                       style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.cyan.shade50,
                           padding: const EdgeInsets.all(16.0),
                           shadowColor: Colors.black,
-                          minimumSize: Size(140, 70))),
+                          minimumSize: const Size(140, 70)),
+                      child: Text("المُتبرع",
+                          style: GoogleFonts.amiri(
+                              fontSize: 30, color: Colors.black))),
                 ]),
               )),
         ]));

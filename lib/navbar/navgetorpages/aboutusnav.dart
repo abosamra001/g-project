@@ -10,8 +10,8 @@ class AboutUs extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.teal.shade100,
         centerTitle: true,
-        title: Text('About Us',style:GoogleFonts.amiri(fontSize: 30,color:Colors.black)),
-
+        title: Text('About Us',
+            style: GoogleFonts.amiri(fontSize: 30, color: Colors.black)),
       ),
     );
   }
