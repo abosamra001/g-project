@@ -56,7 +56,7 @@ class Montataw extends StatelessWidget {
             keyboardType: TextInputType.number,
             decoration: const InputDecoration(
                 hintText: 'رقم الوتساب',
-                prefixIcon: Icon(Icons.whatsapp))),
+                prefixIcon: Icon(Icons.numbers))),
         SizedBox(height: 25,),
         TextFormField(
             decoration: const InputDecoration(
