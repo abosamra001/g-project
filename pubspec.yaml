@@ -68,6 +68,7 @@ flutter:
   assets:
     - images/home.jpeg
     - images/sadaka.jpeg
+    - images/motataw.jpg
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

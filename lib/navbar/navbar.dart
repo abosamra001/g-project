@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:gproject/navbar/navgetorpages/aboutusnav.dart';
+import 'navgetorpages/adminnav.dart';
+import 'navgetorpages/motawanav.dart';
 
 class navbar extends StatelessWidget {
   const navbar({Key? key}) : super(key: key);
@@ -16,25 +19,32 @@ class navbar extends StatelessWidget {
                   fit: BoxFit.cover)),
           child:Text('')),
           SizedBox(height: 30,),
-          Divider(),
+          Divider(color: Colors.black,),
           ListTile(
             leading: Icon(Icons.person_add,color: Colors.black,),
             title: Text("متطوع",style:GoogleFonts.amiri(fontSize: 25,color:Colors.black)),
-            onTap: ()=> null,
+            onTap: (){Navigator.push(context,
+                MaterialPageRoute(builder:(context)=> Montataw()));},
           ),
-          Divider(),
+          Divider(color: Colors.black),
           ListTile(
             leading: Icon(Icons.person,color: Colors.black,),
             title: Text("أدمن",style:GoogleFonts.amiri(fontSize: 25,color:Colors.black)),
-            onTap: ()=> null,
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder:(context)=> AdminNav()));
+            },
           ),
-          Divider(),
+          Divider(color: Colors.black),
           ListTile(
             leading: Icon(Icons.flag_circle,color: Colors.black,),
             title: Text("About Us",style:GoogleFonts.amiri(fontSize: 25,color:Colors.black)),
-            onTap: ()=> null,
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder:(context)=> AboutUs()));
+            },
           ),
-          Divider(),
+          Divider(color: Colors.black),
 
         ],
       ),
