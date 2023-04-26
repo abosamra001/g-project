@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class MontNav extends StatelessWidget {
-  const MontNav({Key? key}) : super(key: key);
+class Motabara extends StatelessWidget {
+  const Motabara({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

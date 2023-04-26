@@ -13,14 +13,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-        debugShowCheckedModeBanner: false,
-        localizationsDelegates: [
-          GlobalCupertinoLocalizations.delegate,
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-        ],
-        supportedLocales: [Locale("ar", "AE")],
-        locale: Locale("ar", "AE"),
-        home: Home());
+      debugShowCheckedModeBanner: false,
+      localizationsDelegates: [
+        GlobalCupertinoLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      supportedLocales: [Locale("ar", "AE")],
+      locale: Locale("ar", "AE"),
+      home: Home(),
+    );
   }
 }
