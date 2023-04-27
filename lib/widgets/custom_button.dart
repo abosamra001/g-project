@@ -5,7 +5,7 @@ class CustomButton extends StatelessWidget {
   const CustomButton(
       {super.key, required this.childText, required this.onPressed});
   final String childText;
-  final void Function() onPressed;
+  final void Function()? onPressed;
   @override
   Widget build(BuildContext context) {
     return Padding(

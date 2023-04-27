@@ -56,7 +56,7 @@ class Home extends StatelessWidget {
                         ),
                       );
                     },
-                    childText: 'المٌنتفع',
+                    childText: 'مُنتفع',
                   ),
                   const SizedBox(height: 20),
                   CustomButton(
@@ -68,7 +68,7 @@ class Home extends StatelessWidget {
                         ),
                       );
                     },
-                    childText: 'المُتبرع',
+                    childText: 'مُتبرع',
                   ),
                 ],
               ),

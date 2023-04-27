@@ -8,12 +8,14 @@ class CustomTextField extends StatelessWidget {
     this.keyboardType,
     this.maxLines = 1,
     this.obscureText = false,
+    this.validator,
   });
   final String? hintText;
   final Widget? prefixIcon;
   final TextInputType? keyboardType;
   final int? maxLines;
   final bool obscureText;
+  final Function(String?)? validator;
   @override
   Widget build(BuildContext context) {
     return Padding(
