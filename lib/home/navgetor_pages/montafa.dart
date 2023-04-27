@@ -13,7 +13,7 @@ class Montafa extends StatefulWidget {
 class _MontafaState extends State<Montafa> {
   final GlobalKey<FormState> formKey = GlobalKey();
 
-  TextEditingController name = TextEditingController();
+  // TextEditingController name = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -36,53 +36,111 @@ class _MontafaState extends State<Montafa> {
         ),
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(30),
+          reverse: true,
           child: Form(
             key: formKey,
             child: Column(
               children: [
-                const CustomTextField(
+                CustomTextField(
                   hintText: 'الاسم',
-                  prefixIcon: Icon(
+                  prefixIcon: const Icon(
                     Icons.person,
                   ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'اِمْلَأْ هذة الخانة';
+                    }
+                    return null;
+                  },
                 ),
-                const CustomTextField(
+                CustomTextField(
                   hintText: 'السن',
-                  prefixIcon: Icon(
+                  prefixIcon: const Icon(
                     Icons.add,
                   ),
                   keyboardType: TextInputType.number,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'اِمْلَأْ هذة الخانة';
+                    } else if (int.parse(value) < 16) {
+                      return 'يجب ان تكون فوق ال 16 عاما';
+                    }
+                    return null;
+                  },
                 ),
-                const CustomTextField(
+                CustomTextField(
                   hintText: 'الرقم القومي',
-                  prefixIcon: Icon(
+                  validator: (value) {
+                    value = value!.trim();
+
+                    if (value.isEmpty) {
+                      return 'اِمْلَأْ هذة الخانة';
+                    } else if ((value[0] != '3' && value[0] != '2') ||
+                        (value.length != 14) ||
+                        (value.contains(' ')) ||
+                        value.contains('-')) {
+                      return 'ادخل رقم قومي صحيح';
+                    }
+                    return null;
+                  },
+                  prefixIcon: const Icon(
                     Icons.recent_actors_outlined,
                   ),
                   keyboardType: TextInputType.number,
                 ),
-                const CustomTextField(
+                CustomTextField(
                   hintText: 'عدد افراد الاسرة',
-                  prefixIcon: Icon(
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'اِمْلَأْ هذة الخانة';
+                    } else if (int.parse(value) < 0 || int.parse(value) > 6) {
+                      return 'عذرا لا نقدر علي مساعدة هذا العدد من الافراد';
+                    }
+                    return null;
+                  },
+                  prefixIcon: const Icon(
                     Icons.family_restroom,
                   ),
                   keyboardType: TextInputType.number,
                 ),
-                const CustomTextField(
+                CustomTextField(
                   hintText: 'رقم الهاتف',
-                  prefixIcon: Icon(
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'اِمْلَأْ هذة الخانة';
+                    } else if (value.length != 11 ||
+                        value.contains('-') ||
+                        value.contains(' ')) {
+                      return 'ادخل رقم صحيح';
+                    }
+                    return null;
+                  },
+                  prefixIcon: const Icon(
                     Icons.phone,
                   ),
                   keyboardType: TextInputType.number,
                 ),
-                const CustomTextField(
+                CustomTextField(
                   hintText: 'العنوان (كامل)',
-                  prefixIcon: Icon(
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'اِمْلَأْ هذة الخانة';
+                    }
+                    return null;
+                  },
+                  prefixIcon: const Icon(
                     Icons.home,
                   ),
                 ),
-                const CustomTextField(
+                CustomTextField(
                   hintText: 'سبب التقديم',
-                  prefixIcon: Icon(
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'اِمْلَأْ هذة الخانة';
+                    }
+                    return null;
+                  },
+                  prefixIcon: const Icon(
                     Icons.question_mark,
                   ),
                   keyboardType: TextInputType.multiline,
@@ -95,7 +153,9 @@ class _MontafaState extends State<Montafa> {
                   ),
                 ),
                 CustomButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    formKey.currentState!.validate();
+                  },
                   childText: 'حفظ',
                 ),
               ],

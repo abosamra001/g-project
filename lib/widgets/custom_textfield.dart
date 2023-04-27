@@ -9,24 +9,22 @@ class CustomTextField extends StatelessWidget {
     this.maxLines = 1,
     this.obscureText = false,
     this.validator,
+    this.controller,
   });
   final String? hintText;
   final Widget? prefixIcon;
   final TextInputType? keyboardType;
   final int? maxLines;
   final bool obscureText;
-  final Function(String?)? validator;
+  final String? Function(String?)? validator;
+  final TextEditingController? controller;
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 12.0),
       child: TextFormField(
-        validator: (value) {
-          if (value!.isEmpty) {
-            return 'This field is required';
-          }
-          return null;
-        },
+        validator: validator,
+        controller: controller,
         decoration: InputDecoration(
           hintText: hintText,
           prefixIcon: prefixIcon,
