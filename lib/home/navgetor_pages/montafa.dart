@@ -13,6 +13,8 @@ class Montafa extends StatefulWidget {
 class _MontafaState extends State<Montafa> {
   final GlobalKey<FormState> formKey = GlobalKey();
 
+  TextEditingController name = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -93,9 +95,7 @@ class _MontafaState extends State<Montafa> {
                   ),
                 ),
                 CustomButton(
-                  onPressed: () {
-                    formKey.currentState!.validate();
-                  },
+                  onPressed: () {},
                   childText: 'حفظ',
                 ),
               ],
