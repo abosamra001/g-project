@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:gproject/models/user_data_model.dart';
 import '/widgets/custom_Button.dart';
 import '/widgets/custom_textfield.dart';
 
@@ -11,9 +13,24 @@ class Montafa extends StatefulWidget {
 }
 
 class _MontafaState extends State<Montafa> {
+  final user = UserDataModel();
   final GlobalKey<FormState> formKey = GlobalKey();
 
-  // TextEditingController name = TextEditingController();
+  CollectionReference userData =
+      FirebaseFirestore.instance.collection('userData');
+  Future<void> addUser() {
+    return userData.add({
+      'name': user.name,
+      'age': user.age,
+      'nationalId': user.nationalId,
+      'familyMembers': user.familyMembers,
+      'phone': user.phone,
+      'address': user.address,
+      'applyReason': user.applyReason,
+      'notes': user.notes,
+      'createdAt': DateTime.now(),
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,16 +53,19 @@ class _MontafaState extends State<Montafa> {
         ),
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(30),
-          reverse: true,
+          // reverse: true,
+          physics: const BouncingScrollPhysics(),
           child: Form(
             key: formKey,
             child: Column(
               children: [
                 CustomTextField(
+                  controller: user.nameController,
+                  onChanged: (value) {
+                    user.name = value;
+                  },
                   hintText: 'الاسم',
-                  prefixIcon: const Icon(
-                    Icons.person,
-                  ),
+                  prefixIcon: const Icon(Icons.person),
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'اِمْلَأْ هذة الخانة';
@@ -54,6 +74,12 @@ class _MontafaState extends State<Montafa> {
                   },
                 ),
                 CustomTextField(
+                  controller: user.ageController,
+                  onChanged: (value) {
+                    if (int.tryParse(value) != null) {
+                      user.age = int.parse(value);
+                    }
+                  },
                   hintText: 'السن',
                   prefixIcon: const Icon(
                     Icons.add,
@@ -62,6 +88,8 @@ class _MontafaState extends State<Montafa> {
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'اِمْلَأْ هذة الخانة';
+                    } else if (int.tryParse(value) == null) {
+                      return 'ادخل رقم صحيح';
                     } else if (int.parse(value) < 16) {
                       return 'يجب ان تكون فوق ال 16 عاما';
                     }
@@ -69,6 +97,10 @@ class _MontafaState extends State<Montafa> {
                   },
                 ),
                 CustomTextField(
+                  controller: user.nationalIdController,
+                  onChanged: (value) {
+                    user.nationalId = value;
+                  },
                   hintText: 'الرقم القومي',
                   validator: (value) {
                     value = value!.trim();
@@ -89,10 +121,18 @@ class _MontafaState extends State<Montafa> {
                   keyboardType: TextInputType.number,
                 ),
                 CustomTextField(
+                  controller: user.familyMembersController,
+                  onChanged: (value) {
+                    if (int.tryParse(value) != null) {
+                      user.familyMembers = int.parse(value);
+                    }
+                  },
                   hintText: 'عدد افراد الاسرة',
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'اِمْلَأْ هذة الخانة';
+                    } else if (int.tryParse(value) == null) {
+                      return 'ادخل رقم صحيح';
                     } else if (int.parse(value) < 0 || int.parse(value) > 6) {
                       return 'عذرا لا نقدر علي مساعدة هذا العدد من الافراد';
                     }
@@ -104,6 +144,10 @@ class _MontafaState extends State<Montafa> {
                   keyboardType: TextInputType.number,
                 ),
                 CustomTextField(
+                  controller: user.phoneController,
+                  onChanged: (value) {
+                    user.phone = value;
+                  },
                   hintText: 'رقم الهاتف',
                   validator: (value) {
                     if (value!.isEmpty) {
@@ -121,6 +165,10 @@ class _MontafaState extends State<Montafa> {
                   keyboardType: TextInputType.number,
                 ),
                 CustomTextField(
+                  controller: user.addressController,
+                  onChanged: (value) {
+                    user.address = value;
+                  },
                   hintText: 'العنوان (كامل)',
                   validator: (value) {
                     if (value!.isEmpty) {
@@ -133,6 +181,10 @@ class _MontafaState extends State<Montafa> {
                   ),
                 ),
                 CustomTextField(
+                  controller: user.applyReasonController,
+                  onChanged: (value) {
+                    user.applyReason = value;
+                  },
                   hintText: 'سبب التقديم',
                   validator: (value) {
                     if (value!.isEmpty) {
@@ -146,15 +198,63 @@ class _MontafaState extends State<Montafa> {
                   keyboardType: TextInputType.multiline,
                   maxLines: null,
                 ),
-                const CustomTextField(
+                CustomTextField(
+                  controller: user.notesController,
+                  onChanged: (value) {
+                    user.notes = value;
+                  },
                   hintText: 'الملاحظات',
-                  prefixIcon: Icon(
+                  prefixIcon: const Icon(
                     Icons.note_add,
                   ),
                 ),
                 CustomButton(
                   onPressed: () {
-                    formKey.currentState!.validate();
+                    if (formKey.currentState!.validate()) {
+                      addUser();
+                      // user.clearAllTextFields();
+
+                      showDialog(
+                        context: context,
+                        builder: (_) {
+                          return AlertDialog(
+                              backgroundColor:
+                                  const Color.fromARGB(255, 161, 236, 246),
+                              content: Text(
+                                'شكرا لك طلبك قيد التنفيذ',
+                                style: GoogleFonts.amiri(
+                                  fontSize: 22,
+                                ),
+                              ),
+                              actions: [
+                                TextButton(
+                                  onPressed: () => Navigator.of(context).pop(),
+                                  child: Text(
+                                    'حسناً',
+                                    style: GoogleFonts.amiri(
+                                      fontSize: 18,
+                                    ),
+                                  ),
+                                )
+                              ],
+                              actionsAlignment: MainAxisAlignment.center);
+                        },
+                      );
+                      // ScaffoldMessenger.of(context).showSnackBar(
+                      //   SnackBar(
+                      //     content: Text(
+                      //       'شكرا لك طلبك قيد التنفيذ',
+                      //       style: GoogleFonts.amiri(
+                      //         fontSize: 24,
+                      //         color: Colors.black,
+                      //       ),
+                      //     ),
+                      //     duration: Duration(seconds: 5),
+                      //     backgroundColor: Color.fromARGB(255, 161, 236, 246),
+                      //     padding: EdgeInsets.all(16),
+                      //   ),
+                      // );
+                    }
                   },
                   childText: 'حفظ',
                 ),

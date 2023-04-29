@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '/widgets/custom_Button.dart';
 import 'navgetor_pages/motabara.dart';
 import 'navgetor_pages/montafa.dart';
-import '/navbar/navbar.dart';
+import 'navbar/navbar.dart';
 
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);

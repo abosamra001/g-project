@@ -10,6 +10,7 @@ class CustomTextField extends StatelessWidget {
     this.obscureText = false,
     this.validator,
     this.controller,
+    this.onChanged,
   });
   final String? hintText;
   final Widget? prefixIcon;
@@ -17,12 +18,14 @@ class CustomTextField extends StatelessWidget {
   final int? maxLines;
   final bool obscureText;
   final String? Function(String?)? validator;
+  final void Function(String)? onChanged;
   final TextEditingController? controller;
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 12.0),
       child: TextFormField(
+        onChanged: onChanged,
         validator: validator,
         controller: controller,
         decoration: InputDecoration(
