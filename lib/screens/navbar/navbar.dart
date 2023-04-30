@@ -62,7 +62,7 @@ class NavBar extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const AdminNav(),
+                  builder: (context) => AdminNav(),
                 ),
               );
             },

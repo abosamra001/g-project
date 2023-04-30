@@ -32,17 +32,19 @@ class _MotabaraState extends State<Motabara> {
           stream: userData.orderBy('createdAt').snapshots(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              List<CustomCard> dataFromFirestore = [];
+              List<CustomCard> conformedData = [];
               for (var d in snapshot.data!.docs) {
-                dataFromFirestore.add(
-                  CustomCard.fromSnapshot(d),
-                );
+                if (d['conformed']) {
+                  conformedData.add(
+                    CustomCard.fromSnapshot(d, (_) {}),
+                  );
+                }
               }
               return ListView.builder(
                 itemBuilder: (context, i) {
-                  return dataFromFirestore[i];
+                  return conformedData[i];
                 },
-                itemCount: dataFromFirestore.length,
+                itemCount: conformedData.length,
               );
             } else {
               return const Center(

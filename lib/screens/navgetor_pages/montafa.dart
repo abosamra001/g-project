@@ -29,6 +29,7 @@ class _MontafaState extends State<Montafa> {
       'applyReason': user.applyReason,
       'notes': user.notes,
       'createdAt': DateTime.now(),
+      'conformed': false,
     });
   }
 
