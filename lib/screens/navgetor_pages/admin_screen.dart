@@ -14,31 +14,52 @@ class _AdminBanelState extends State<AdminBanel> {
       FirebaseFirestore.instance.collection('userData');
 
   void updateUserData(String id) {
-    userData.doc(id).update({'conformed': true});
+    userData.doc(id).update({'confirmed': true});
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      backgroundColor: Colors.teal.shade50,
+      appBar: AppBar(
+        backgroundColor: Colors.teal.shade100,
+        title: const Text('Admin'),
+        centerTitle: true,
+      ),
       body: StreamBuilder<QuerySnapshot>(
           stream: userData.orderBy('createdAt').snapshots(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              List<AdminCustomCard> notComformed = [];
+              List<CustomCard> notComformed = [];
               for (var d in snapshot.data!.docs) {
-                if (d['conformed'] == false) {
-                  notComformed
-                      .add(AdminCustomCard.fromSnapshot(d, updateUserData));
+                if (d['confirmed'] == false) {
+                  notComformed.add(
+                    CustomCard.fromSnapshot(
+                      d,
+                      bottonText: 'Confirm',
+                      onPressed: updateUserData,
+                    ),
+                  );
                 }
               }
-              return ListView.builder(
-                itemBuilder: (context, i) => notComformed[i],
-                itemCount: notComformed.length,
-              );
+              return notComformed.isEmpty
+                  ? const Center(
+                      child: Text(
+                        'no request right now',
+                        style: TextStyle(
+                          fontSize: 18,
+                        ),
+                      ),
+                    )
+                  : ListView.builder(
+                      itemBuilder: (context, i) => notComformed[i],
+                      itemCount: notComformed.length,
+                    );
             } else {
               return const Center(
-                child: CircularProgressIndicator(),
+                child: CircularProgressIndicator(
+                  color: Colors.teal,
+                ),
               );
             }
           }),

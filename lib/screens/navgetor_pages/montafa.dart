@@ -29,7 +29,12 @@ class _MontafaState extends State<Montafa> {
       'applyReason': user.applyReason,
       'notes': user.notes,
       'createdAt': DateTime.now(),
-      'conformed': false,
+      'confirmed': false,
+      'done': false,
+      'rating': {
+        'ratingRatio': 2.0,
+        'ratingNotes': '',
+      }
     });
   }
 
@@ -213,48 +218,35 @@ class _MontafaState extends State<Montafa> {
                   onPressed: () {
                     if (formKey.currentState!.validate()) {
                       addUser();
-                      // user.clearAllTextFields();
+                      user.clearAllTextFields();
 
                       showDialog(
                         context: context,
                         builder: (_) {
                           return AlertDialog(
-                              backgroundColor:
-                                  const Color.fromARGB(255, 161, 236, 246),
-                              content: Text(
-                                'شكرا لك طلبك قيد التنفيذ',
-                                style: GoogleFonts.amiri(
-                                  fontSize: 22,
-                                ),
+                            backgroundColor:
+                                const Color.fromARGB(255, 161, 236, 246),
+                            content: Text(
+                              'شكرا لك طلبك قيد التنفيذ',
+                              style: GoogleFonts.amiri(
+                                fontSize: 22,
                               ),
-                              actions: [
-                                TextButton(
-                                  onPressed: () => Navigator.of(context).pop(),
-                                  child: Text(
-                                    'حسناً',
-                                    style: GoogleFonts.amiri(
-                                      fontSize: 18,
-                                    ),
+                            ),
+                            actions: [
+                              TextButton(
+                                onPressed: () => Navigator.of(context).pop(),
+                                child: Text(
+                                  'حسناً',
+                                  style: GoogleFonts.amiri(
+                                    fontSize: 18,
                                   ),
-                                )
-                              ],
-                              actionsAlignment: MainAxisAlignment.center);
+                                ),
+                              )
+                            ],
+                            actionsAlignment: MainAxisAlignment.center,
+                          );
                         },
                       );
-                      // ScaffoldMessenger.of(context).showSnackBar(
-                      //   SnackBar(
-                      //     content: Text(
-                      //       'شكرا لك طلبك قيد التنفيذ',
-                      //       style: GoogleFonts.amiri(
-                      //         fontSize: 24,
-                      //         color: Colors.black,
-                      //       ),
-                      //     ),
-                      //     duration: Duration(seconds: 5),
-                      //     backgroundColor: Color.fromARGB(255, 161, 236, 246),
-                      //     padding: EdgeInsets.all(16),
-                      //   ),
-                      // );
                     }
                   },
                   childText: 'حفظ',

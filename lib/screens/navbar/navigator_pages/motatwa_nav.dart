@@ -32,6 +32,7 @@ class _MotatawaState extends State<Motatawa> {
           borderRadius: BorderRadius.circular(50),
         ),
         child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
           padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 30),
           child: Form(
             key: formKey,
