@@ -98,7 +98,7 @@ class _AdminNavState extends State<AdminNav> {
                       return null;
                     },
                     hintText: 'البريد الالكتروني',
-                    prefixIcon: const Icon(Icons.email),
+                    prefixIcon: Icons.email,
                     keyboardType: TextInputType.emailAddress,
                   ),
                   CustomTextField(
@@ -111,7 +111,7 @@ class _AdminNavState extends State<AdminNav> {
                       return null;
                     },
                     hintText: 'الرقم السري',
-                    prefixIcon: const Icon(Icons.email),
+                    prefixIcon: Icons.email,
                     obscureText: true,
                   ),
                   CustomButton(

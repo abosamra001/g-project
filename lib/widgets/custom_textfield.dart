@@ -13,7 +13,7 @@ class CustomTextField extends StatelessWidget {
     this.onChanged,
   });
   final String? hintText;
-  final Widget? prefixIcon;
+  final IconData? prefixIcon;
   final TextInputType? keyboardType;
   final int? maxLines;
   final bool obscureText;
@@ -31,8 +31,22 @@ class CustomTextField extends StatelessWidget {
         controller: controller,
         decoration: InputDecoration(
           hintText: hintText,
-          prefixIcon: prefixIcon,
+          prefixIcon: Icon(
+            prefixIcon,
+            color: Colors.teal,
+          ),
+          border: const UnderlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.teal,
+            ),
+          ),
+          focusedBorder: const UnderlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.teal,
+            ),
+          ),
         ),
+        onTap: () {},
         keyboardType: keyboardType,
         maxLines: maxLines,
         obscureText: obscureText,

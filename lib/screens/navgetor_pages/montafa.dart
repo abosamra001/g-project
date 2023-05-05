@@ -71,7 +71,7 @@ class _MontafaState extends State<Montafa> {
                     user.name = value;
                   },
                   hintText: 'الاسم',
-                  prefixIcon: const Icon(Icons.person),
+                  prefixIcon: Icons.person,
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'اِمْلَأْ هذة الخانة';
@@ -87,9 +87,7 @@ class _MontafaState extends State<Montafa> {
                     }
                   },
                   hintText: 'السن',
-                  prefixIcon: const Icon(
-                    Icons.add,
-                  ),
+                  prefixIcon: Icons.call,
                   keyboardType: TextInputType.number,
                   validator: (value) {
                     if (value!.isEmpty) {
@@ -121,9 +119,7 @@ class _MontafaState extends State<Montafa> {
                     }
                     return null;
                   },
-                  prefixIcon: const Icon(
-                    Icons.recent_actors_outlined,
-                  ),
+                  prefixIcon: Icons.recent_actors_outlined,
                   keyboardType: TextInputType.number,
                 ),
                 CustomTextField(
@@ -142,9 +138,7 @@ class _MontafaState extends State<Montafa> {
                     }
                     return null;
                   },
-                  prefixIcon: const Icon(
-                    Icons.family_restroom,
-                  ),
+                  prefixIcon: Icons.family_restroom,
                   keyboardType: TextInputType.number,
                 ),
                 CustomTextField(
@@ -163,9 +157,7 @@ class _MontafaState extends State<Montafa> {
                     }
                     return null;
                   },
-                  prefixIcon: const Icon(
-                    Icons.phone,
-                  ),
+                  prefixIcon: Icons.phone,
                   keyboardType: TextInputType.number,
                 ),
                 CustomTextField(
@@ -180,9 +172,7 @@ class _MontafaState extends State<Montafa> {
                     }
                     return null;
                   },
-                  prefixIcon: const Icon(
-                    Icons.home,
-                  ),
+                  prefixIcon: Icons.home,
                 ),
                 CustomTextField(
                   controller: user.applyReasonController,
@@ -196,9 +186,7 @@ class _MontafaState extends State<Montafa> {
                     }
                     return null;
                   },
-                  prefixIcon: const Icon(
-                    Icons.question_mark,
-                  ),
+                  prefixIcon: Icons.question_mark,
                   keyboardType: TextInputType.multiline,
                   maxLines: null,
                 ),
@@ -208,9 +196,7 @@ class _MontafaState extends State<Montafa> {
                     user.notes = value;
                   },
                   hintText: 'الملاحظات',
-                  prefixIcon: const Icon(
-                    Icons.note_add,
-                  ),
+                  prefixIcon: Icons.note_add,
                 ),
                 CustomButton(
                   onPressed: () {
@@ -222,13 +208,11 @@ class _MontafaState extends State<Montafa> {
                         context: context,
                         builder: (_) {
                           return AlertDialog(
-                            backgroundColor:
-                                Colors.teal.shade50,
+                            backgroundColor: Colors.teal.shade50,
                             content: Text(
                               'شكرا لك طلبك قيد التنفيذ',
                               style: GoogleFonts.amiri(
-                                fontSize: 22,fontWeight: FontWeight.bold
-                              ),
+                                  fontSize: 22, fontWeight: FontWeight.bold),
                             ),
                             actions: [
                               TextButton(
@@ -236,7 +220,8 @@ class _MontafaState extends State<Montafa> {
                                 child: Text(
                                   'حسناً',
                                   style: GoogleFonts.amiri(
-                                    fontSize: 18,,color:Colors.black,
+                                    fontSize: 18,
+                                    color: Colors.black,
                                   ),
                                 ),
                               )

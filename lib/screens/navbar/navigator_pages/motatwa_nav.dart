@@ -39,33 +39,33 @@ class _MotatawaState extends State<Motatawa> {
             child: Column(
               children: [
                 const CustomTextField(
-                    hintText: 'الاسم', prefixIcon: Icon(Icons.person)),
+                    hintText: 'الاسم', prefixIcon: Icons.person),
                 const CustomTextField(
                   hintText: 'المؤهل',
-                  prefixIcon: Icon(Icons.school),
+                  prefixIcon:Icons.school,
                 ),
                 const CustomTextField(
                   hintText: 'السن',
-                  prefixIcon: Icon(Icons.add),
+                  prefixIcon: Icons.add,
                   keyboardType: TextInputType.number,
                 ),
                 const CustomTextField(
                   hintText: 'رقم الهاتف',
-                  prefixIcon: Icon(Icons.phone),
+                  prefixIcon: Icons.phone,
                   keyboardType: TextInputType.number,
                 ),
                 const CustomTextField(
                   hintText: 'رقم الوتساب',
-                  prefixIcon: Icon(Icons.numbers),
+                  prefixIcon: Icons.numbers,
                   keyboardType: TextInputType.number,
                 ),
                 const CustomTextField(
                   hintText: 'العنوان(المدينة ، المحافظة)',
-                  prefixIcon: Icon(Icons.home),
+                  prefixIcon: Icons.home,
                 ),
                 const CustomTextField(
                   hintText: 'الملاحظات',
-                  prefixIcon: Icon(Icons.note_add),
+                  prefixIcon: Icons.note_add,
                   keyboardType: TextInputType.multiline,
                   maxLines: null,
                 ),
