@@ -139,8 +139,6 @@ class _MontafaState extends State<Montafa> {
                       return 'اِمْلَأْ هذة الخانة';
                     } else if (int.tryParse(value) == null) {
                       return 'ادخل رقم صحيح';
-                    } else if (int.parse(value) < 0 || int.parse(value) > 6) {
-                      return 'عذرا لا نقدر علي مساعدة هذا العدد من الافراد';
                     }
                     return null;
                   },

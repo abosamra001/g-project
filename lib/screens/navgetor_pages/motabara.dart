@@ -20,73 +20,7 @@ class _MotabaraState extends State<Motabara> {
   String _ratingNotes = '';
 
   void updateUserData(String id) {
-    showDialog(
-      barrierDismissible: false,
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('قيم هذة العملية'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Text(
-                'نحتاج هذا التقيم في معرفة ما اذا كان المتطوعين علي قدر من الكفاءة والامانة'),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: RatingBar.builder(
-                initialRating: 2,
-                itemPadding: const EdgeInsets.all(4),
-                minRating: 1,
-                itemBuilder: (context, _) => const Icon(
-                  Icons.star,
-                  color: Colors.teal,
-                ),
-                onRatingUpdate: (rate) {
-                  _rating = rate;
-                },
-              ),
-            ),
-            CustomTextField(
-              hintText: 'اضافة ملاحظة',
-              onChanged: (value) {
-                _ratingNotes = value;
-              },
-              maxLines: null,
-            ),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              userData.doc(id).update(
-                {
-                  'done': true,
-                  'rating': {
-                    'ratingRatio': _rating,
-                    'ratingNotes': _ratingNotes,
-                  }
-                },
-              );
-              Navigator.of(context).pop();
-            },
-            child: const Text(
-              'تقيم',
-              style: TextStyle(fontSize: 18),
-            ),
-          ),
-          TextButton(
-            onPressed: () {
-              userData.doc(id).update({'done': true});
-              Navigator.of(context).pop();
-            },
-            child: const Text(
-              'لا اريد',
-              style: TextStyle(color: Colors.grey, fontSize: 18),
-            ),
-          ),
-        ],
-        actionsAlignment: MainAxisAlignment.center,
-      ),
-    );
+    userData.doc(id).update({'done': true});
   }
 
   @override
