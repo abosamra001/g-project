@@ -225,11 +225,11 @@ class _MontafaState extends State<Montafa> {
                         builder: (_) {
                           return AlertDialog(
                             backgroundColor:
-                                const Color.fromARGB(255, 161, 236, 246),
+                                Colors.teal.shade50,
                             content: Text(
                               'شكرا لك طلبك قيد التنفيذ',
                               style: GoogleFonts.amiri(
-                                fontSize: 22,
+                                fontSize: 22,fontWeight: FontWeight.bold
                               ),
                             ),
                             actions: [
@@ -238,7 +238,7 @@ class _MontafaState extends State<Montafa> {
                                 child: Text(
                                   'حسناً',
                                   style: GoogleFonts.amiri(
-                                    fontSize: 18,
+                                    fontSize: 18,,color:Colors.black,
                                   ),
                                 ),
                               )
