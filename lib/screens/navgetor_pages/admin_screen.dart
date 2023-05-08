@@ -19,50 +19,62 @@ class _AdminBanelState extends State<AdminBanel> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.teal.shade50,
-      appBar: AppBar(
-        backgroundColor: Colors.teal.shade100,
-        title: const Text('Admin'),
-        centerTitle: true,
-      ),
-      body: StreamBuilder<QuerySnapshot>(
-          stream: userData.orderBy('createdAt').snapshots(),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              List<CustomCard> notComformed = [];
-              for (var d in snapshot.data!.docs) {
-                if (d['confirmed'] == false) {
-                  notComformed.add(
-                    CustomCard.fromSnapshot(
-                      d,
-                      bottonText: 'Confirm',
-                      onPressed: updateUserData,
-                    ),
-                  );
-                }
-              }
-              return notComformed.isEmpty
-                  ? const Center(
-                      child: Text(
-                        'no request right now',
-                        style: TextStyle(
-                          fontSize: 18,
-                        ),
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        backgroundColor: Colors.teal.shade50,
+        appBar: AppBar(
+          backgroundColor: Colors.teal.shade100,
+          title: const Text('Admin'),
+          centerTitle: true,
+          bottom: const TabBar(tabs: [
+            Tab(child: Text('الطلبات', style: TextStyle(color: Colors.black))),
+            Tab(child: Text('التقيمات', style: TextStyle(color: Colors.black))),
+          ]),
+        ),
+        body: TabBarView(
+          children: [
+            StreamBuilder<QuerySnapshot>(
+                stream: userData.orderBy('createdAt').snapshots(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    List<CustomCard> notComformed = [];
+                    for (var d in snapshot.data!.docs) {
+                      if (d['confirmed'] == false) {
+                        notComformed.add(
+                          CustomCard.fromSnapshot(
+                            d,
+                            bottonText: 'Confirm',
+                            onPressed: updateUserData,
+                          ),
+                        );
+                      }
+                    }
+                    return notComformed.isEmpty
+                        ? const Center(
+                            child: Text(
+                              'no request right now',
+                              style: TextStyle(
+                                fontSize: 18,
+                              ),
+                            ),
+                          )
+                        : ListView.builder(
+                            itemBuilder: (context, i) => notComformed[i],
+                            itemCount: notComformed.length,
+                          );
+                  } else {
+                    return const Center(
+                      child: CircularProgressIndicator(
+                        color: Colors.teal,
                       ),
-                    )
-                  : ListView.builder(
-                      itemBuilder: (context, i) => notComformed[i],
-                      itemCount: notComformed.length,
                     );
-            } else {
-              return const Center(
-                child: CircularProgressIndicator(
-                  color: Colors.teal,
-                ),
-              );
-            }
-          }),
+                  }
+                }),
+            Text('abosamra'),
+          ],
+        ),
+      ),
     );
   }
 }

@@ -31,10 +31,6 @@ class _MontafaState extends State<Montafa> {
       'createdAt': DateTime.now(),
       'confirmed': false,
       'done': false,
-      'rating': {
-        'ratingRatio': 2.0,
-        'ratingNotes': '',
-      }
     });
   }
 
@@ -203,7 +199,6 @@ class _MontafaState extends State<Montafa> {
                     if (formKey.currentState!.validate()) {
                       addUser();
                       user.clearAllTextFields();
-
                       showDialog(
                         context: context,
                         builder: (_) {
@@ -229,7 +224,7 @@ class _MontafaState extends State<Montafa> {
                             actionsAlignment: MainAxisAlignment.center,
                           );
                         },
-                      );
+                      ).then((value) => Navigator.of(context).pop());
                     }
                   },
                   childText: 'حفظ',

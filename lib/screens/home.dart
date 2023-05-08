@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:gproject/screens/navgetor_pages/register.dart';
 import '/widgets/custom_Button.dart';
-import 'navgetor_pages/motabara.dart';
 import 'navgetor_pages/montafa.dart';
 import 'navbar/navbar.dart';
 
@@ -61,10 +61,10 @@ class Home extends StatelessWidget {
                   const SizedBox(height: 20),
                   CustomButton(
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const Motabara(),
+                      showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          content: RegisterUser(),
                         ),
                       );
                     },

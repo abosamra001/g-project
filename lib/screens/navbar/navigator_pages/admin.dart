@@ -22,20 +22,23 @@ class _AdminNavState extends State<AdminNav> {
   Future<void> logIn() async {
     showIndicator();
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: _email!,
-        password: _password!,
-      );
-      Navigator.of(context).pop();
-      Navigator.of(context)
-          .push(
-            MaterialPageRoute(
-              builder: (context) => const AdminBanel(),
-            ),
-          )
-          .then(
-            (_) => FirebaseAuth.instance.signOut(),
-          );
+      await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: _email!, password: _password!)
+          .then((_) {
+        Navigator.of(context).pop();
+        Navigator.of(context)
+            .push(
+          MaterialPageRoute(
+            builder: (context) => const AdminBanel(),
+          ),
+        )
+            .then(
+          (_) {
+            FirebaseAuth.instance.signOut();
+            Navigator.of(context).pop();
+          },
+        );
+      });
     } on FirebaseAuthException catch (e) {
       Navigator.of(context).pop();
 

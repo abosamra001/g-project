@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:gproject/screens/navgetor_pages/admin_screen.dart';
 import './navigator_pages/about_us.dart';
 import './navigator_pages/motatwa_nav.dart';
 import './navigator_pages/admin.dart';
