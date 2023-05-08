@@ -68,6 +68,28 @@ class NavBar extends StatelessWidget {
             },
           ),
           const Divider(color: Colors.black),
+           ListTile(
+            leading: const Icon(
+              Icons.star_half,
+              color: Colors.black,
+            ),
+            title: Text(
+              "شكاوي",
+              style: GoogleFonts.amiri(
+                fontSize: 25,
+                color: Colors.black,
+              ),
+            ),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>  Complaints(),
+                ),
+              );
+            },
+          ),
+          const Divider(color: Colors.black),
           ListTile(
             leading: const Icon(
               Icons.flag_circle,
