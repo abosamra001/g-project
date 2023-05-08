@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:gproject/screens/navgetor_pages/admin_screen.dart';
 import './navigator_pages/about_us.dart';
 import './navigator_pages/motatwa_nav.dart';
 import './navigator_pages/admin.dart';
+import 'navigator_pages/complaints.dart';
 
 class NavBar extends StatelessWidget {
   const NavBar({Key? key}) : super(key: key);
@@ -68,7 +70,7 @@ class NavBar extends StatelessWidget {
             },
           ),
           const Divider(color: Colors.black),
-           ListTile(
+          ListTile(
             leading: const Icon(
               Icons.star_half,
               color: Colors.black,
@@ -84,7 +86,7 @@ class NavBar extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) =>  Complaints(),
+                  builder: (context) => Complaints(),
                 ),
               );
             },

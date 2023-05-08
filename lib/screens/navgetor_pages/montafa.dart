@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:gproject/models/user_data_model.dart';
+import '/constants/constants.dart';
+import '/models/user_data_model.dart';
 import '/widgets/custom_Button.dart';
 import '/widgets/custom_textfield.dart';
 
@@ -17,7 +18,7 @@ class _MontafaState extends State<Montafa> {
   final GlobalKey<FormState> formKey = GlobalKey();
 
   CollectionReference userData =
-      FirebaseFirestore.instance.collection('userData');
+      FirebaseFirestore.instance.collection(kUserDataCollection);
   Future<void> addUser() {
     return userData.add({
       'name': user.name,
@@ -31,10 +32,6 @@ class _MontafaState extends State<Montafa> {
       'createdAt': DateTime.now(),
       'confirmed': false,
       'done': false,
-      'rating': {
-        'ratingRatio': 2.0,
-        'ratingNotes': '',
-      }
     });
   }
 
@@ -199,37 +196,39 @@ class _MontafaState extends State<Montafa> {
                   prefixIcon: Icons.note_add,
                 ),
                 CustomButton(
-                  onPressed: () {
+                  onPressed: () async {
                     if (formKey.currentState!.validate()) {
-                      addUser();
+                      await addUser();
                       user.clearAllTextFields();
 
-                      showDialog(
-                        context: context,
-                        builder: (_) {
-                          return AlertDialog(
-                            backgroundColor: Colors.teal.shade50,
-                            content: Text(
-                              'شكرا لك طلبك قيد التنفيذ',
-                              style: GoogleFonts.amiri(
-                                  fontSize: 22, fontWeight: FontWeight.bold),
-                            ),
-                            actions: [
-                              TextButton(
-                                onPressed: () => Navigator.of(context).pop(),
-                                child: Text(
-                                  'حسناً',
-                                  style: GoogleFonts.amiri(
-                                    fontSize: 18,
-                                    color: Colors.black,
+                      if (context.mounted) {
+                        showDialog(
+                          context: context,
+                          builder: (_) {
+                            return AlertDialog(
+                              backgroundColor: Colors.teal.shade50,
+                              content: Text(
+                                'شكرا لك طلبك قيد التنفيذ',
+                                style: GoogleFonts.amiri(
+                                    fontSize: 22, fontWeight: FontWeight.bold),
+                              ),
+                              actions: [
+                                TextButton(
+                                  onPressed: () => Navigator.of(context).pop(),
+                                  child: Text(
+                                    'حسناً',
+                                    style: GoogleFonts.amiri(
+                                      fontSize: 18,
+                                      color: Colors.black,
+                                    ),
                                   ),
-                                ),
-                              )
-                            ],
-                            actionsAlignment: MainAxisAlignment.center,
-                          );
-                        },
-                      );
+                                )
+                              ],
+                              actionsAlignment: MainAxisAlignment.center,
+                            );
+                          },
+                        ).then((value) => Navigator.of(context).pop());
+                      }
                     }
                   },
                   childText: 'حفظ',

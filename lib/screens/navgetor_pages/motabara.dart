@@ -1,26 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import '/widgets/custom_textfield.dart';
+import '/constants/constants.dart';
 import '/widgets/custom_card.dart';
 
 class Motabara extends StatefulWidget {
-  const Motabara({Key? key}) : super(key: key);
+  const Motabara({required this.name, required this.phone, Key? key})
+      : super(key: key);
 
+  final String name, phone;
   @override
   State<Motabara> createState() => _MotabaraState();
 }
 
 class _MotabaraState extends State<Motabara> {
   CollectionReference userData =
-      FirebaseFirestore.instance.collection('userData');
-
-  double _rating = 1.0;
-  String _ratingNotes = '';
+      FirebaseFirestore.instance.collection(kUserDataCollection);
 
   void updateUserData(String id) {
-    userData.doc(id).update({'done': true});
+    userData.doc(id).update({
+      'done': true,
+      'motabaraData': {'name': widget.name, 'phone': widget.phone}
+    });
   }
 
   @override
@@ -48,7 +49,7 @@ class _MotabaraState extends State<Motabara> {
                   conformedData.add(
                     CustomCard.fromSnapshot(
                       d,
-                      bottonText: 'تم التبرع',
+                      bottonText: 'تبرع',
                       onPressed: updateUserData,
                     ),
                   );
