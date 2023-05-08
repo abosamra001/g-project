@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import '/widgets/custom_textfield.dart';
+import '/constants/constants.dart';
 import '/widgets/custom_card.dart';
 
 class Motabara extends StatefulWidget {
@@ -16,7 +15,7 @@ class Motabara extends StatefulWidget {
 
 class _MotabaraState extends State<Motabara> {
   CollectionReference userData =
-      FirebaseFirestore.instance.collection('userData');
+      FirebaseFirestore.instance.collection(kUserDataCollection);
 
   void updateUserData(String id) {
     userData.doc(id).update({

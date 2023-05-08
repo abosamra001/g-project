@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:gproject/constants/constants.dart';
+import 'package:gproject/widgets/complaint_card.dart';
 import '/widgets/custom_card.dart';
 
 class AdminBanel extends StatefulWidget {
@@ -11,10 +13,17 @@ class AdminBanel extends StatefulWidget {
 
 class _AdminBanelState extends State<AdminBanel> {
   CollectionReference userData =
-      FirebaseFirestore.instance.collection('userData');
+      FirebaseFirestore.instance.collection(kUserDataCollection);
+
+  CollectionReference complaints =
+      FirebaseFirestore.instance.collection(kComplaintsCollection);
 
   void updateUserData(String id) {
     userData.doc(id).update({'confirmed': true});
+  }
+
+  void updateComplaints(String id) {
+    complaints.doc(id).update({'solved': true});
   }
 
   @override
@@ -53,7 +62,7 @@ class _AdminBanelState extends State<AdminBanel> {
                     return notComformed.isEmpty
                         ? const Center(
                             child: Text(
-                              'no request right now',
+                              'لا يوجد طلبات حاليا',
                               style: TextStyle(
                                 fontSize: 18,
                               ),
@@ -71,7 +80,39 @@ class _AdminBanelState extends State<AdminBanel> {
                     );
                   }
                 }),
-            Text('abosamra'),
+            StreamBuilder<QuerySnapshot>(
+              stream: complaints.orderBy('createdAt').snapshots(),
+              builder: ((context, snapshot) {
+                if (snapshot.hasData) {
+                  List<ComplaintCard> uncheckedComplaints = [];
+                  for (var d in snapshot.data!.docs) {
+                    if (d['solved'] == false) {
+                      uncheckedComplaints
+                          .add(ComplaintCard.fromSnapShot(d, updateComplaints));
+                    }
+                  }
+                  return uncheckedComplaints.isEmpty
+                      ? const Center(
+                          child: Text(
+                            'لا يوجد شكاوي حاليا',
+                            style: TextStyle(
+                              fontSize: 18,
+                            ),
+                          ),
+                        )
+                      : ListView.builder(
+                          itemBuilder: (context, i) => uncheckedComplaints[i],
+                          itemCount: uncheckedComplaints.length,
+                        );
+                } else {
+                  return const Center(
+                    child: CircularProgressIndicator(
+                      color: Colors.teal,
+                    ),
+                  );
+                }
+              }),
+            ),
           ],
         ),
       ),
