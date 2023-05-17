@@ -57,8 +57,8 @@ class _ComplaintsState extends State<Complaints> {
           borderRadius: BorderRadius.circular(50),
         ),
         child: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
-          padding: EdgeInsets.all(30),
+          physics: const BouncingScrollPhysics(),
+          padding: const EdgeInsets.all(30),
           child: Form(
             key: formKey,
             child: Column(
@@ -72,7 +72,7 @@ class _ComplaintsState extends State<Complaints> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
                 Center(
                   child: DropdownButton<String>(
                     hint: const Text("اختار الشخص"),
@@ -106,7 +106,7 @@ class _ComplaintsState extends State<Complaints> {
                     }).toList(),
                   ),
                 ),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
                 Center(
                   child: CustomTextField(
                     controller: _notesController,
@@ -122,7 +122,7 @@ class _ComplaintsState extends State<Complaints> {
                     maxLines: null,
                   ),
                 ),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
                 CustomButton(
                   childText: 'حفظ',
                   onPressed: () async {
