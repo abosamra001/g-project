@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:gproject/screens/navgetor_pages/register.dart';
@@ -10,6 +13,9 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
+    final screenOrientation = MediaQuery.of(context).orientation;
+    // print(screenSize);
     return Scaffold(
       drawer: const NavBar(),
       appBar: AppBar(
@@ -20,61 +26,101 @@ class Home extends StatelessWidget {
           style: GoogleFonts.amiri(fontSize: 30, color: Colors.black),
         ),
       ),
-      body: Stack(
-        children: [
-          Container(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(
-                  'images/home.jpeg',
+      body: Container(
+        color: const Color.fromARGB(255, 210, 210, 210),
+        child: Stack(
+          children: [
+            Container(
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(
+                    'images/home.jpeg',
+                  ),
+                  fit: BoxFit.contain,
                 ),
-                fit: BoxFit.cover,
               ),
             ),
-          ),
-          SingleChildScrollView(
-            padding: const EdgeInsets.all(30),
-            child: Center(
-              child: Column(
-                children: [
-                  Text(
-                    'لَن تَنَالُوا۟ ٱلْبِرَّ حَتَّىٰ تُنفِقُوا۟ مِمَّا تُحِبُّونَ وَمَا تُنفِقُوا۟ مِن شَىْءٍ فَإِنَّ ٱللَّهَ بِهِۦ عَلِيمٌ \n(آل عمران) ',
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.amiri(
-                      fontSize: 25,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
+            SingleChildScrollView(
+              padding: const EdgeInsets.all(30),
+              child: Center(
+                child: Column(
+                  children: [
+                    Text(
+                      'لَن تَنَالُوا۟ ٱلْبِرَّ حَتَّىٰ تُنفِقُوا۟ مِمَّا تُحِبُّونَ وَمَا تُنفِقُوا۟ مِن شَىْءٍ فَإِنَّ ٱللَّهَ بِهِۦ عَلِيمٌ \n(آل عمران) ',
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.amiri(
+                        fontSize: min(
+                          screenSize.height * 0.07,
+                          min(screenSize.width * 0.07, 40),
+                        ),
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 40),
-                  CustomButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Montafa(),
-                        ),
-                      );
-                    },
-                    childText: 'مُنتفع',
-                  ),
-                  const SizedBox(height: 20),
-                  CustomButton(
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) => AlertDialog(
-                          content: RegisterUser(),
-                        ),
-                      );
-                    },
-                    childText: 'مُتبرع',
-                  ),
-                ],
+                    const SizedBox(height: 40),
+                    if (screenOrientation == Orientation.portrait || kIsWeb)
+                      Column(
+                        children: [
+                          CustomButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => Montafa(),
+                                ),
+                              );
+                            },
+                            childText: 'مُنتفع',
+                          ),
+                          const SizedBox(height: 20),
+                          CustomButton(
+                            onPressed: () {
+                              showDialog(
+                                context: context,
+                                builder: (context) => AlertDialog(
+                                  content: RegisterUser(),
+                                ),
+                              );
+                            },
+                            childText: 'مُتبرع',
+                          ),
+                        ],
+                      )
+                    else
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          CustomButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => Montafa(),
+                                ),
+                              );
+                            },
+                            childText: 'مُنتفع',
+                          ),
+                          const SizedBox(height: 20),
+                          CustomButton(
+                            onPressed: () {
+                              showDialog(
+                                context: context,
+                                builder: (context) => AlertDialog(
+                                  content: RegisterUser(),
+                                ),
+                              );
+                            },
+                            childText: 'مُتبرع',
+                          ),
+                        ],
+                      ),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
