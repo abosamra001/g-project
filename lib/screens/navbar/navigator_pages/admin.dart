@@ -9,7 +9,7 @@ import '/widgets/custom_button.dart';
 import '/widgets/custom_textfield.dart';
 
 class AdminNav extends StatefulWidget {
-  const AdminNav({Key? key}) : super(key: key);
+  AdminNav({Key? key}) : super(key: key);
 
   @override
   State<AdminNav> createState() => _AdminNavState();

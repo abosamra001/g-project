@@ -5,7 +5,7 @@ import '/widgets/custom_button.dart';
 import '/widgets/custom_textfield.dart';
 
 class RegisterUser extends StatefulWidget {
- const RegisterUser({Key? key}) : super(key: key);
+  RegisterUser({Key? key}) : super(key: key);
 
   @override
   State<RegisterUser> createState() => _RegisterUserState();

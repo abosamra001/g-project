@@ -3,7 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 import './navigator_pages/about_us.dart';
 import './navigator_pages/admin.dart';
 import 'navigator_pages/complaints.dart';
-import 'navigator_pages/motatwa_nav.dart';
 
 class NavBar extends StatelessWidget {
   const NavBar({Key? key}) : super(key: key);
@@ -38,12 +37,6 @@ class NavBar extends StatelessWidget {
               ),
             ),
             onTap: () {
-              showDialog(
-                context: context,
-                builder: (context) => const AlertDialog(
-                  content: Text('قريبا....'),
-                ),
-              );
               // Navigator.push(
               //   context,
               //   MaterialPageRoute(
@@ -69,7 +62,7 @@ class NavBar extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const AdminNav(),
+                  builder: (context) => AdminNav(),
                 ),
               );
             },

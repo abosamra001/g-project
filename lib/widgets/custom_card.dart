@@ -10,7 +10,7 @@ class CustomCard extends StatelessWidget {
   final String userApplyReason;
   final bool confirmed;
   final String id;
-  final void Function(String)? onPressed;
+  void Function(String)? onPressed;
   final String text;
 
   CustomCard({
