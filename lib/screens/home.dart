@@ -66,7 +66,7 @@ class Home extends StatelessWidget {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) =>const Montafa(),
+                                  builder: (context) => const Montafa(),
                                 ),
                               );
                             },
@@ -77,7 +77,7 @@ class Home extends StatelessWidget {
                             onPressed: () {
                               showDialog(
                                 context: context,
-                                builder: (context) => AlertDialog(
+                                builder: (context) => const AlertDialog(
                                   content: RegisterUser(),
                                 ),
                               );
@@ -95,7 +95,7 @@ class Home extends StatelessWidget {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) =>const  Montafa(),
+                                  builder: (context) => const Montafa(),
                                 ),
                               );
                             },
@@ -106,7 +106,7 @@ class Home extends StatelessWidget {
                             onPressed: () {
                               showDialog(
                                 context: context,
-                                builder: (context) => AlertDialog(
+                                builder: (context) =>const AlertDialog(
                                   content: RegisterUser(),
                                 ),
                               );
