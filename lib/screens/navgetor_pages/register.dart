@@ -3,9 +3,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:gproject/screens/navgetor_pages/motabara.dart';
 import '/widgets/custom_button.dart';
 import '/widgets/custom_textfield.dart';
+import '/constants/check_connectivity.dart';
 
 class RegisterUser extends StatefulWidget {
- const RegisterUser({Key? key}) : super(key: key);
+  const RegisterUser({Key? key}) : super(key: key);
 
   @override
   State<RegisterUser> createState() => _RegisterUserState();
@@ -62,15 +63,27 @@ class _RegisterUserState extends State<RegisterUser> {
               ),
               CustomButton(
                 childText: 'دخول',
-                onPressed: () {
+                onPressed: () async {
                   if (formKey.currentState!.validate()) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            Motabara(name: name!, phone: phone!),
-                      ),
-                    ).then((value) => Navigator.of(context).pop());
+                    bool connection = await checkConnectivity();
+                    if (connection && context.mounted) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              Motabara(name: name!, phone: phone!),
+                        ),
+                      ).then((value) => Navigator.of(context).pop());
+                    } else {
+                      Navigator.of(context).pop();
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content:
+                              Text('لا يوجد اتصال بالإنترنت حاول في وقت اخر'),
+                          backgroundColor: Colors.teal,
+                        ),
+                      );
+                    }
                   }
                 },
               ),

@@ -34,4 +34,15 @@ class UserDataModel {
     applyReasonController.clear();
     familyMembersController.clear();
   }
+
+  void disposeControllers() {
+    nameController.dispose();
+    ageController.dispose();
+    nationalIdController.dispose();
+    phoneController.dispose();
+    addressController.dispose();
+    notesController.dispose();
+    applyReasonController.dispose();
+    familyMembersController.dispose();
+  }
 }

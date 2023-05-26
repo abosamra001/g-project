@@ -62,6 +62,7 @@ class _IntroState extends State<Intro> {
                 onPressed: () async {
                   final prefs = await SharedPreferences.getInstance();
                   prefs.setBool('showHome', true);
+                  if (!mounted) return;
                   Navigator.of(context).pushReplacement(
                       MaterialPageRoute(builder: (context) => const Home()));
                 },
