@@ -4,6 +4,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
+import '/constants/check_connectivity.dart';
 import '/constants/constants.dart';
 import '/models/user_data_model.dart';
 import '/widgets/custom_Button.dart';
@@ -36,6 +38,12 @@ class _MontafaState extends State<Montafa> {
       'confirmed': false,
       'done': false,
     });
+  }
+
+  @override
+  void dispose() {
+    user.disposeControllers();
+    super.dispose();
   }
 
   @override
@@ -387,10 +395,12 @@ class _MontafaState extends State<Montafa> {
                   CustomButton(
                     onPressed: () async {
                       if (formKey.currentState!.validate()) {
-                        await addUser();
-                        user.clearAllTextFields();
+                        bool connection = await checkConnectivity();
 
-                        if (context.mounted) {
+                        if (connection && mounted) {
+                          await addUser();
+                          user.clearAllTextFields();
+                          if (!mounted) return;
                           showDialog(
                             context: context,
                             builder: (_) {
@@ -419,6 +429,8 @@ class _MontafaState extends State<Montafa> {
                               );
                             },
                           ).then((value) => Navigator.of(context).pop());
+                        } else {
+                          onConnectionError(context);
                         }
                       }
                     },

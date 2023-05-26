@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:gproject/constants/check_connectivity.dart';
 import 'package:gproject/screens/navgetor_pages/admin_screen.dart';
 import '/widgets/custom_button.dart';
 import '/widgets/custom_textfield.dart';
@@ -42,11 +43,19 @@ class _AdminNavState extends State<AdminNav> {
           },
         );
       });
+      emailController.clear();
+      passController.clear();
     } on FirebaseAuthException catch (e) {
       Navigator.of(context).pop();
-
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(e.code)));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            e.code,
+            textAlign: TextAlign.end,
+          ),
+          backgroundColor: Colors.teal,
+        ),
+      );
     }
   }
 
@@ -57,6 +66,13 @@ class _AdminNavState extends State<AdminNav> {
         child: CircularProgressIndicator(),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passController.dispose();
+    super.dispose();
   }
 
   @override
@@ -173,9 +189,13 @@ class _AdminNavState extends State<AdminNav> {
                     childText: 'تسجيل الدخول',
                     onPressed: () async {
                       if (formKey.currentState!.validate()) {
-                        await logIn();
-                        emailController.clear();
-                        passController.clear();
+                        final connection = await checkConnectivity();
+                        if (connection) {
+                          await logIn();
+                        } else {
+                          if (!mounted) return;
+                          onConnectionError(context);
+                        }
                       }
                     },
                   ),

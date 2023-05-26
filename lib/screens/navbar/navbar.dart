@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import './navigator_pages/about_us.dart';
 import './navigator_pages/admin.dart';
 import 'navigator_pages/complaints.dart';
-import 'navigator_pages/motatwa_nav.dart';
+// import 'navigator_pages/motatwa_nav.dart';
 
 class NavBar extends StatelessWidget {
   const NavBar({Key? key}) : super(key: key);
