@@ -4,17 +4,18 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:gproject/screens/navgetor_pages/register.dart';
+
 import '/widgets/custom_Button.dart';
-import 'navgetor_pages/montafa.dart';
 import 'navbar/navbar.dart';
+import 'navgetor_pages/montafa.dart';
 
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final screenSize = MediaQuery.of(context).size;
-    final screenOrientation = MediaQuery.of(context).orientation;
+    final screenSize = MediaQuery.sizeOf(context);
+    final screenOrientation = MediaQuery.orientationOf(context);
     // print(screenSize);
     return Scaffold(
       drawer: const NavBar(),
@@ -106,7 +107,7 @@ class Home extends StatelessWidget {
                             onPressed: () {
                               showDialog(
                                 context: context,
-                                builder: (context) =>const AlertDialog(
+                                builder: (context) => const AlertDialog(
                                   content: RegisterUser(),
                                 ),
                               );

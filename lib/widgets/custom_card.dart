@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:gproject/constants/check_connectivity.dart';
 
 class CustomCard extends StatelessWidget {
   final String userName;
@@ -58,37 +59,20 @@ class CustomCard extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(
-                    width: 165,
-                    child: Text(
-                      'الاسم : $userName',
-                      style: _style,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                  const SizedBox(width: 20),
-                  Text('السن: $userAge', style: _style),
-                ],
+              Text(
+                'الاسم : $userName',
+                style: _style,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
               ),
-              Row(
-                children: [
-                  SizedBox(
-                    width: 165,
-                    child: Text(
-                      'رقم الهاتف : $userPhone',
-                      style: _style,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                  const SizedBox(width: 20),
-                  Text('عدد افراد الاسرة : $userFamilyMembers', style: _style),
-                ],
+              Text('السن: $userAge', style: _style),
+              Text(
+                'رقم الهاتف : $userPhone',
+                style: _style,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
               ),
+              Text('عدد افراد الاسرة : $userFamilyMembers', style: _style),
               Text('العنوان : $userAddress', style: _style),
               const Text('سبب التقديم : '),
               Container(
@@ -106,8 +90,18 @@ class CustomCard extends StatelessWidget {
             ],
           ),
           ElevatedButton(
-            onPressed: () {
-              onPressed!(id);
+            onPressed: () async {
+              showIndicator(context);
+              final isOnline = await hasInternetConnection();
+              if (isOnline && context.mounted) {
+                onPressed!(id);
+                Navigator.pop(context);
+              } else {
+                if (context.mounted) {
+                  Navigator.pop(context);
+                  onConnectionError(context);
+                }
+              }
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.teal,

@@ -44,6 +44,7 @@ class _RegisterUserState extends State<RegisterUser> {
                 },
                 hintText: 'الاسم',
                 prefixIcon: Icons.person,
+                textInputAction: TextInputAction.next,
               ),
               CustomTextField(
                 onChanged: (value) => phone = value,
@@ -60,13 +61,17 @@ class _RegisterUserState extends State<RegisterUser> {
                 hintText: 'رقم الهاتف',
                 prefixIcon: Icons.phone,
                 keyboardType: TextInputType.number,
+                textInputAction: TextInputAction.done,
               ),
               CustomButton(
                 childText: 'دخول',
                 onPressed: () async {
                   if (formKey.currentState!.validate()) {
-                    bool connection = await checkConnectivity();
-                    if (connection && context.mounted) {
+                    showIndicator(context);
+                    bool isOnline = await hasInternetConnection();
+                    if (isOnline && context.mounted) {
+                      Navigator.pop(context);
+
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -76,13 +81,9 @@ class _RegisterUserState extends State<RegisterUser> {
                       ).then((value) => Navigator.of(context).pop());
                     } else {
                       Navigator.of(context).pop();
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content:
-                              Text('لا يوجد اتصال بالإنترنت حاول في وقت اخر'),
-                          backgroundColor: Colors.teal,
-                        ),
-                      );
+                      Navigator.of(context).pop();
+
+                      onConnectionError(context);
                     }
                   }
                 },

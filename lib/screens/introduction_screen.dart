@@ -17,14 +17,14 @@ class _IntroState extends State<Intro> {
   bool isLastPage = false;
   @override
   Widget build(BuildContext context) {
-    final screenOrientaion = MediaQuery.of(context).orientation;
+    final screenOrientation = MediaQuery.orientationOf(context);
     return Scaffold(
       body: Container(
         padding: const EdgeInsets.only(bottom: 60),
         child: PageView(
           controller: _controller,
-          // check if we reached the last page or not so if index == 2 then it becomes true
-          //  which is stored in isLastPage
+          // check if we reached the last page or not so if index == 2
+          // then it becomes true which is stored in isLastPage
           onPageChanged: (index) {
             setState(() {
               isLastPage = index == 2;
@@ -32,14 +32,14 @@ class _IntroState extends State<Intro> {
           },
           children: [
             buildPage(
-              orientation: screenOrientaion,
+              orientation: screenOrientation,
               imageUrl: 'images/splash_1.jpg',
               color: const Color.fromARGB(255, 232, 226, 228),
               title: 'مرحبا بك',
               subtitle: 'تبرع هو برنامج يساعدك في ان تتصدق بشكل امن',
             ),
             buildPage(
-              orientation: screenOrientaion,
+              orientation: screenOrientation,
               imageUrl: 'images/splash_2.jpg',
               color: const Color.fromARGB(255, 232, 213, 199),
               title: 'تريد أن تتصدق؟',
@@ -47,7 +47,7 @@ class _IntroState extends State<Intro> {
                   'إن كنت تريد أن تتصدق ولكن لا تعرف احد \n او تشعر بعدم الإرتياح إن كان بينكم وسيط \n حسناً لا تقلق فنحن هنا لمساعدتك',
             ),
             buildPage(
-                orientation: screenOrientaion,
+                orientation: screenOrientation,
                 imageUrl: 'images/splash_3.jpg',
                 color: Colors.white,
                 title: 'اذهب بنفسك...',

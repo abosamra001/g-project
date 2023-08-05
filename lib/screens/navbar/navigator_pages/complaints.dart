@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:gproject/constants/check_connectivity.dart';
 
 import '/constants/constants.dart';
 import '/widgets/custom_Button.dart';
@@ -23,12 +24,6 @@ class _ComplaintsState extends State<Complaints> {
       FirebaseFirestore.instance.collection(kComplaintsCollection);
 
   Future<void> addComplaints() {
-    showDialog(
-      context: context,
-      builder: (context) => const Center(
-        child: CircularProgressIndicator(),
-      ),
-    );
     return complaints.add({
       'person': _selectedItem ?? 'شكوى عامة',
       'notes': _notesController.text,
@@ -127,36 +122,45 @@ class _ComplaintsState extends State<Complaints> {
                   childText: 'حفظ',
                   onPressed: () async {
                     if (formKey.currentState!.validate()) {
-                      await addComplaints();
-
-                      _notesController.clear();
-                      if (context.mounted) {
-                        showDialog(
-                          context: context,
-                          builder: (_) {
-                            return AlertDialog(
-                              backgroundColor: Colors.teal.shade50,
-                              content: Text(
-                                'شكرا لك سنعمل علي حل مشكلتك',
-                                style: GoogleFonts.amiri(
-                                    fontSize: 22, fontWeight: FontWeight.bold),
-                              ),
-                              actions: [
-                                TextButton(
-                                  onPressed: () => Navigator.of(context).pop(),
-                                  child: Text(
-                                    'حسناً',
-                                    style: GoogleFonts.amiri(
-                                      fontSize: 18,
-                                      color: Colors.black,
+                      showIndicator(context);
+                      bool isOnline = await hasInternetConnection();
+                      if (isOnline) {
+                        await addComplaints();
+                        _notesController.clear();
+                        if (context.mounted) {
+                          showDialog(
+                            context: context,
+                            builder: (_) {
+                              return AlertDialog(
+                                backgroundColor: Colors.teal.shade50,
+                                content: Text(
+                                  'شكرا لك سنعمل علي حل مشكلتك',
+                                  style: GoogleFonts.amiri(
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () =>
+                                        Navigator.of(context).pop(),
+                                    child: Text(
+                                      'حسناً',
+                                      style: GoogleFonts.amiri(
+                                        fontSize: 18,
+                                        color: Colors.black,
+                                      ),
                                     ),
-                                  ),
-                                )
-                              ],
-                              actionsAlignment: MainAxisAlignment.center,
-                            );
-                          },
-                        );
+                                  )
+                                ],
+                                actionsAlignment: MainAxisAlignment.center,
+                              );
+                            },
+                          );
+                        }
+                      } else {
+                        if (!mounted) return;
+                        Navigator.pop(context);
+                        onConnectionError(context);
                       }
                     }
                   },

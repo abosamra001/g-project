@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:gproject/constants/check_connectivity.dart';
 
 class ComplaintCard extends StatelessWidget {
   final String person;
@@ -60,17 +61,32 @@ class ComplaintCard extends StatelessWidget {
               style: _style,
             ),
           ),
-          ElevatedButton(
-            onPressed: () {
-              onPressed!(id);
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.teal,
-            ),
-            child: Text(
-              'تم حلها',
-              style: _style,
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                onPressed: () async {
+                  showIndicator(context);
+                  final isOnline = await hasInternetConnection();
+                  if (isOnline && context.mounted) {
+                    onPressed!(id);
+                    Navigator.pop(context);
+                  } else {
+                    if (context.mounted) {
+                      Navigator.pop(context);
+                      onConnectionError(context);
+                    }
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.teal,
+                ),
+                child: Text(
+                  'تم حلها',
+                  style: _style,
+                ),
+              ),
+            ],
           ),
         ],
       ),

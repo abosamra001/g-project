@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class CustomTextField extends StatelessWidget {
   const CustomTextField({
@@ -11,22 +12,32 @@ class CustomTextField extends StatelessWidget {
     this.validator,
     this.controller,
     this.onChanged,
+    this.autofocus = false,
+    this.textInputAction,
+    this.inputFormatters,
   });
   final String? hintText;
-  final IconData? prefixIcon;
-  final TextInputType? keyboardType;
   final int? maxLines;
   final bool obscureText;
+  final bool autofocus;
+  final IconData? prefixIcon;
+  final TextInputType? keyboardType;
+  final TextEditingController? controller;
+  final TextInputAction? textInputAction;
   final String? Function(String?)? validator;
   final void Function(String)? onChanged;
-  final TextEditingController? controller;
+  final List<TextInputFormatter>? inputFormatters;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 12.0),
       child: TextFormField(
+        textInputAction: textInputAction,
         textDirection: TextDirection.rtl,
+        autofocus: autofocus,
         onChanged: onChanged,
+        inputFormatters: inputFormatters,
         validator: validator,
         controller: controller,
         decoration: InputDecoration(

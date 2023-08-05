@@ -1,11 +1,12 @@
 import 'dart:math';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:gproject/constants/check_connectivity.dart';
 import 'package:gproject/screens/navgetor_pages/admin_screen.dart';
+
 import '/widgets/custom_button.dart';
 import '/widgets/custom_textfield.dart';
 
@@ -19,66 +20,58 @@ class AdminNav extends StatefulWidget {
 class _AdminNavState extends State<AdminNav> {
   String? _email, _password;
 
-  final GlobalKey<FormState> formKey = GlobalKey();
-  var emailController = TextEditingController();
-  var passController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  final _emailController = TextEditingController();
+  final _passController = TextEditingController();
 
   Future<void> logIn() async {
-    showIndicator();
-    try {
-      await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: _email!, password: _password!)
-          .then((_) {
-        Navigator.of(context).pop();
-        Navigator.of(context)
-            .push(
-          MaterialPageRoute(
-            builder: (context) => const AdminBanel(),
-          ),
-        )
-            .then(
-          (_) {
+    showIndicator(context);
+    bool isOnline = await hasInternetConnection();
+    if (isOnline) {
+      try {
+        await FirebaseAuth.instance
+            .signInWithEmailAndPassword(email: _email!, password: _password!)
+            .then((_) {
+          Navigator.pop(context);
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => const AdminBanel()))
+              .then((_) {
             FirebaseAuth.instance.signOut();
-            Navigator.of(context).pop();
-          },
-        );
-      });
-      emailController.clear();
-      passController.clear();
-    } on FirebaseAuthException catch (e) {
-      Navigator.of(context).pop();
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            e.code,
-            textAlign: TextAlign.end,
+          });
+        });
+        _emailController.clear();
+        _passController.clear();
+      } on FirebaseAuthException catch (e) {
+        if (!mounted) return;
+        Navigator.pop(context);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              e.code,
+              textAlign: TextAlign.end,
+            ),
+            backgroundColor: Colors.teal,
           ),
-          backgroundColor: Colors.teal,
-        ),
-      );
+        );
+      }
+    } else {
+      if (!mounted) return;
+      Navigator.pop(context);
+      onConnectionError(context);
     }
-  }
-
-  void showIndicator() {
-    showDialog(
-      context: context,
-      builder: (context) => const Center(
-        child: CircularProgressIndicator(),
-      ),
-    );
   }
 
   @override
   void dispose() {
-    emailController.dispose();
-    passController.dispose();
+    _emailController.dispose();
+    _passController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final screenSize = MediaQuery.of(context).size;
-    final screenOrientation = MediaQuery.of(context).orientation;
+    final screenSize = MediaQuery.sizeOf(context);
+    final screenOrientation = MediaQuery.orientationOf(context);
     // print(screenOrientation);
     return Scaffold(
       backgroundColor: Colors.teal.shade50,
@@ -102,7 +95,7 @@ class _AdminNavState extends State<AdminNav> {
             borderRadius: BorderRadius.circular(50),
           ),
           child: Form(
-            key: formKey,
+            key: _formKey,
             child: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
               padding: const EdgeInsets.all(30),
@@ -121,7 +114,7 @@ class _AdminNavState extends State<AdminNav> {
                       children: [
                         const SizedBox(height: 35),
                         CustomTextField(
-                          controller: emailController,
+                          controller: _emailController,
                           onChanged: (value) => _email = value,
                           validator: (valid) {
                             if (valid!.isEmpty) {
@@ -132,9 +125,11 @@ class _AdminNavState extends State<AdminNav> {
                           hintText: 'البريد الالكتروني',
                           prefixIcon: Icons.email,
                           keyboardType: TextInputType.emailAddress,
+                          autofocus: true,
+                          textInputAction: TextInputAction.next,
                         ),
                         CustomTextField(
-                          controller: passController,
+                          controller: _passController,
                           onChanged: (value) => _password = value,
                           validator: (valid) {
                             if (valid!.isEmpty) {
@@ -145,6 +140,7 @@ class _AdminNavState extends State<AdminNav> {
                           hintText: 'الرقم السري',
                           prefixIcon: Icons.email,
                           obscureText: true,
+                          textInputAction: TextInputAction.done,
                         ),
                       ],
                     )
@@ -153,7 +149,7 @@ class _AdminNavState extends State<AdminNav> {
                       children: [
                         Expanded(
                           child: CustomTextField(
-                            controller: emailController,
+                            controller: _emailController,
                             onChanged: (value) => _email = value,
                             validator: (valid) {
                               if (valid!.isEmpty) {
@@ -170,7 +166,7 @@ class _AdminNavState extends State<AdminNav> {
                         const SizedBox(width: 20),
                         Expanded(
                           child: CustomTextField(
-                            controller: passController,
+                            controller: _passController,
                             onChanged: (value) => _password = value,
                             validator: (valid) {
                               if (valid!.isEmpty) {
@@ -186,18 +182,11 @@ class _AdminNavState extends State<AdminNav> {
                       ],
                     ),
                   CustomButton(
-                    childText: 'تسجيل الدخول',
+                    needConnection: true,
                     onPressed: () async {
-                      if (formKey.currentState!.validate()) {
-                        final connection = await checkConnectivity();
-                        if (connection) {
-                          await logIn();
-                        } else {
-                          if (!mounted) return;
-                          onConnectionError(context);
-                        }
-                      }
+                      await logIn();
                     },
+                    childText: 'تسجيل الدخول',
                   ),
                 ],
               ),
